@@ -1,0 +1,52 @@
+version: "3"
+
+x-postgres14:
+  &postgres14
+  image: postgres14
+  build:
+    context: .
+    dockerfile: Dockerfile
+  working_dir: /src
+  environment:
+    POSTGRES_PASSWORD: password
+  volumes:
+    - .:/src
+
+services:
+  build:
+    image: pglogical-builder
+    build:
+      context: ./docker/pglogical-builder
+      dockerfile: Dockerfile
+    working_dir: /src
+    volumes:
+      - .:/src
+    command: [ "bash" ]
+  pg-alice:
+    image: postgres14
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /src
+    environment:
+      POSTGRES_PASSWORD: password
+    volumes:
+      - .:/src
+    ports:
+      - "6432:5432"
+    volumes:
+      - ./pg-alice/data:/var/lib/postgresql/data
+      - ./pg-alice/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d/
+  pg-bob:
+    image: postgres14
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /src
+    environment:
+      POSTGRES_PASSWORD: password
+    ports:
+      - "7432:5432"
+    volumes:
+      - ./pg-bob/data:/var/lib/postgresql/data
+      - ./pg-bob/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d/
