@@ -7,6 +7,8 @@ RUN apt update && apt install -y build-essential postgresql-server-dev-14 \
 
 RUN wget https://github.com/2ndQuadrant/pglogical/archive/refs/tags/REL2_4_1.tar.gz
 RUN tar -zxvf REL2_4_1.tar.gz
+ADD pglogical.patch /tmp/pglogical.patch
+RUN cd pglogical-REL2_4_1 && patch < /tmp/pglogical.patch
 RUN cd pglogical-REL2_4_1 && make && make install DESTDIR=/tmp/dist
 
 FROM scratch as pglogical

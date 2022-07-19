@@ -38,6 +38,8 @@ services:
       - ./pg-alice/data:/var/lib/postgresql/data
       - ./pg-alice/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d/
   pg-bob:
+    depends_on:
+      - pg-alice
     image: postgres14
     build:
       context: .

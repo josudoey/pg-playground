@@ -1,0 +1,15 @@
+diff --git a/pglogical_output_plugin.c b/pglogical_output_plugin.c
+index abbe00c..02237cc 100644
+--- a/pglogical_output_plugin.c
++++ b/pglogical_output_plugin.c
+@@ -668,8 +668,8 @@ pg_decode_change(LogicalDecodingContext *ctx, ReorderBufferTXN *txn,
+ 	old = MemoryContextSwitchTo(data->context);
+ 
+ 	/* First check the table filter */
+-	if (!pglogical_change_filter(data, relation, change, &att_list))
+-		return;
++	// if (!pglogical_change_filter(data, relation, change, &att_list))
++		// return;
+ 
+ 	/*
+ 	 * If the protocol wants to write relation information and the client
