@@ -29,6 +29,7 @@ services:
       dockerfile: Dockerfile
     working_dir: /src
     environment:
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
     volumes:
       - .:/src
@@ -46,6 +47,7 @@ services:
       dockerfile: Dockerfile
     working_dir: /src
     environment:
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
     ports:
       - "7432:5432"
